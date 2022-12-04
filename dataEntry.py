@@ -7,7 +7,7 @@ from tkinter import Tk, Frame, Canvas, Text, Button, END, BooleanVar, Menu
 DC = r"DD (\d+)"
 
 ABILITY_SCORES = r"(Force|Dextérité|Constitution|Intelligence|Sagesse|Charisme)"
-SAVES = r"(Réflexes|Volonté|Vigueur)"
+SAVES = r"(réflexes|volonté|vigueur|Réflexes|Volonté|Vigueur)"
 SKILLS = r"(Perception|Acrobaties|Arcanes|Athlétisme|Artisanat|Duperie|Diplomatie|Intimidation|Médecine|Nature|" \
          r"Occultisme|Représentation|Religion|Société|Discrétion|Survie|Vol)"
 
@@ -103,6 +103,40 @@ LOCALIZE_TEMPLATES = {
 }
 LOCALIZE_PATTERN_TEMPLATES = re.compile(r'\b(' + '|'.join(LOCALIZE_TEMPLATES.keys()) + r')\b')
 
+LOCALIZE_DAMAGE = {
+    "contondant": "bludgeoning",
+    "contondants": "bludgeoning",
+    "perforant": "piercing",
+    "perforants": "piercing",
+    "tranchant": "slashing",
+    "tranchants": "slashing",
+    "acide": "acid",
+    "froid": "cold",
+    "électricité": "electricity",
+    "feu": "fire",
+    "son": "sonic",
+    "positif": "positive",
+    "positifs": "positive",
+    "négatif": "negative",
+    "négatifs": "negative",
+    "chaotique": "chaotic",
+    "chaotiques": "chaotic",
+    "loyal": "lawful",
+    "loyaux": "lawful",
+    "bon": "good",
+    "bons": "good",
+    "mauvais": "evil",
+    "mental": "mental",
+    "mentaux": "mental",
+    "poison": "poison",
+    "saignement": "bleed",
+    "précision": "precision",
+    "nécrotique": "necrotic",
+    "nécrotiques": "necrotic"
+}
+LOCALIZE_PATTERN_DAMAGE = re.compile(r'\b(' + '|'.join(LOCALIZE_DAMAGE.keys()) + r')\b')
+
+
 def convert_to_lower(match_obj):
     if match_obj.group() is not None:
         return match_obj.group().lower()
@@ -184,12 +218,18 @@ def handle_activation_actions(string):
 
 def handle_damage_rolls(string):
     string = sub(r" (\d)d(\d) (rounds|minutes|heures|jours)", r" [[/r \1d\2 #\3]]{\1d\2 \3}", string)
-    string = sub(r" (\d+) (\w*) dégâts", r" [[/r {\1}[\2]]]{\1 dégâts \2}", string)
-    string = sub(r"(\d+)d(\d+)\+(\d+) dégâts (\w*)", r"[[/r {\1d\2+\3}[\4]]]{\1d\2+\3 dégâts \4}", string)
-    string = sub(r"(\d+)d(\d+) persistent (\w*) dégâts",
-                 r"[[/r {\1d\2}[persistent,\3]]]{\1d\2} %sPersistent Damage]{Dégâts de \3 persistants}"
-                 % CONDITION_COMPENDIUM, string)
-    string = sub(r"(\d+)d(\d+) (\w*) dégâts", r"[[/r {\1d\2}[\3]]]{\1d\2 \3 dégâts}", string)
+    string = sub(r"(\d+)(d\d+)?(\+\d+)? dégât(s)?( d\'éclaboussures?)?(\sde\s|\sd\'|\s)(\w*)( persistants?)?",
+                 lambda x: f"[[/r {{{x.group(1)}{x.group(2) or ''}{x.group(3) or ''}}}"
+                           f"[{'persistent,' if x.group(8) is not None else ''}"
+                           f"{'splash,' if x.group(5) is not None else ''}"
+                           f"{LOCALIZE_DAMAGE[x.group(7)] if x.group(7) in LOCALIZE_DAMAGE else ''}]]]"
+                           f"{{{x.group(1)}{x.group(2) or ''}{x.group(3) or ''} dégât"
+                           f"{x.group(4) if x.group(4) is not None else ''}"
+                           f"{x.group(5) if x.group(5) is not None else ''}"
+                           f"{x.group(6)+x.group(7) if x.group(7) in LOCALIZE_DAMAGE else ''}"
+                           f"{x.group(8) or ''}}}{x.group(6)+x.group(7) if x.group(7) not in LOCALIZE_DAMAGE else ''}"
+                 , string)
+    string = sub(r"\[\]", "", string)
     string = sub(r"(\d+)d(\d+) (\w+)(\,|\.)", r"[[/r \1d\2 #\3]]{\1d\2 \3}\4", string)
     string = sub(r"(\d+)d(\d+)\.", r"[[/r \1d\2]]{\1d\2}.", string)
     return string
@@ -215,7 +255,8 @@ def handle_templates(string):
     string = sub(r"(émanation|explosion|cône|ligne|Émanation|Explosion|Cône|Ligne) de (\d+\,?\d?) (mètres|m)",
                  r"@Template[type:\1|distance:\2]", string)
     string = sub(r"type:%s" % r"(Émanation|Explosion|Cône|Ligne)", convert_to_lower, string)
-    string = sub(r"distance:(\d+\,?\d?)(]|\|)", lambda x: "distance:"+str(int(float(x.group(1).replace(",", "."))*10/3))+x.group(2), string)
+    string = sub(r"distance:(\d+\,?\d?)(]|\|)",
+                 lambda x: "distance:" + str(int(float(x.group(1).replace(",", ".")) * 10 / 3)) + x.group(2), string)
 
     return LOCALIZE_PATTERN_TEMPLATES.sub(lambda x: LOCALIZE_TEMPLATES[x.group()], string)
 
@@ -328,8 +369,8 @@ def reformat(text, third_party=False, companion=False, eidolon=False, ancestry=F
     string = "<p>" + text.replace("Déclencheur", "<p><strong>Déclencheur</strong>") \
         .replace("\nSuccès critique", "</p><hr /><p><strong>Réussite critique</strong>") \
         .replace("\nSuccès", "</p><p><strong>Réussite</strong>") \
-        .replace("\nÉchec", "</p><p><strong>Échec</strong>") \
         .replace("\nÉchec critique", "</p><p><strong>Échec critique</strong>") \
+        .replace("\nÉchec", "</p><p><strong>Échec</strong>") \
         .replace("\nSpécial", "</p><p><strong>Spécial</strong>") \
         .replace("\n", " ") \
         .replace("Fréquence", "<p><strong>Fréquence</strong>") \
