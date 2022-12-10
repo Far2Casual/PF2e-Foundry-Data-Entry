@@ -13,13 +13,13 @@ SKILLS = r"(Perception|Acrobaties|Arcanes|Athlétisme|Artisanat|Duperie|Diplomat
 
 CONDITION_COMPENDIUM = r"@UUID[Compendium.pf2e.conditionitems."
 
-ACTIONS = ["Être furtif", "Garder l’équilibre", "Contraindre", "Ramper",
-           "Faire diversion", "Démoraliser", "Désamorcer un dispositif", "Désarmer", "Gagner de l’argent", "S'échapper",
-           "Feinter",
-           "Force Open", "Grab an Edge", "Grapple", "High Jump", "Leap", "Liberating Step", "Long Jump",
-           "Make an Impression", "Mount", "Perform", "Search", "Seek", "Sense Motive", "Shove", "Sneak",
-           "Steal", "Take Cover", "Track", "Treat Disease", "Treat Poison", "Treat Wounds",
-           "Trip", "Tumble Through"]
+ACTIONS = ["(Être|Est) furtif", "Garder? l’équilibre", "Contrain(dre|t)", "Ramper?", "Fai(re|t) diversion",
+           "Démoraliser?", "Désamorcer? un dispositif", "Désarmer?", "Gagner? de l’argent", "S'échapper?", "Feinter?",
+           "Forcer? l'ouverture", "Se raccrocher? in extremis", "Saisi(r|t)", "Sauter? en hauteur",
+           "Sauter? en longueur", "Bondi(r|t)", "Pas libérateur", "Fai(re|t) bonne impression", "Se met(tre)? en selle",
+           "Se produi(re|t)", "Chercher?", "Fouiller?", "Deviner? les intentions", "Pousser?", "Se cacher?", "Voler?",
+           "Vol", "Mise à l'abri", "Pister?", "Soigner? les maladies", "Soigner? un empoisonnement",
+           "Soigner? les blessures", "Croc-en-jambe", "Déplacement acrobatique"]
 
 CONDITIONS = ["Aveuglée?s?", "Fatiguée?s?", "Confuse?s?", "Masquée?s?", "Éblouie?s?", "Sourde?s?", "Invisibles?",
               "Prise?s? au dépourvu", "Immobilisée?s?", "Á terre", "Inconsciente?s?", "Fascinée?s?", "Paralysée?s?",
@@ -28,21 +28,43 @@ CONDITIONS = ["Aveuglée?s?", "Fatiguée?s?", "Confuse?s?", "Masquée?s?", "Ébl
 NUMBERED_CONDITIONS = ["Maladroite?s?", "Condamnée?s?", "Drainée?s?", "Affaiblie?s?", "Ralentie?s?", "Effrayée?s?",
                        "Malades?", "Étourdie?s?", "Stupefiée?s?", "Accélérée?s?"]
 
-EQUIPMENT = []  # "Handwraps of Mighty Blows"]
-
-FEATS = []  # "Canny Acumen", "Quick Jump"]
-
-SPELLS = []  # "Dimension Door", "Plane Shift", "Stone Tell", "divine lance", "protection", "searing light", "divine wrath",
-# "divine decree", "divine aura", "heroism", "chilling spray", "ray of frost", "cone of cold", "polar ray",
-# "heal", "water walk", "electric arc", "shocking grasp", "lightning bolt", "lightning storm", "chain lightning",
-# "fireball", "chilling darkness", "produce flame", "burning hands", "flaming sphere", "wall of fire", "meteor swarm",
-# "magic missile", "spiritual weapon", "spirtual guardian", "spirit song", "hypercognition", "daze",
-# "phantom pain", "warrior's regret", "phantasmal killer", "weird", "phantasmal calamity", "harm", "chill touch",
-# "sudden blight", "enervation", "wail of the banshee", "puff of poison", "spider sting", "noxious vapors",
-# "swarming wasp stings", "purple worm sting", "linnorm sting", "imp sting", "disrupt undead", "disrupting weapons",
-# "breath of life", "regenerate", "true seeing", "feather fall", "jump", "mending", "illusory disguise", "charm",
-# "fear", "share lore", "summon plant or fungus", "object reading", "enthrall", "bless", "mindblank", "invisibility",
-# "endure elements", "knock", "earth bind", "fly", "augury"]
+LOCALIZE_ACTIONS = {
+    "(Être|Est) furtif": "Compendium.pf2e.actionspf2e.VMozDqMMuK5kpoX4",
+    "Garder? l’équilibre": "Compendium.pf2e.actionspf2e.M76ycLAqHoAgbcej",
+    "Contrain(dre|t)": "Compendium.pf2e.actionspf2e.tHCqgwjtQtzNqVvd",
+    "Ramper?": "Compendium.pf2e.actionspf2e.Tj055UcNm6UEgtCg",
+    "Fai(re|t) diversion": "Compendium.pf2e.actionspf2e.GkmbTGfg8KcgynOA",
+    "Démoraliser?": "Compendium.pf2e.actionspf2e.2u915NdUyQan6uKF",
+    "Désamorcer? un dispositif": "Compendium.pf2e.actionspf2e.cYdz2grcOcRt4jk6",
+    "Désarmer?": "Compendium.pf2e.actionspf2e.Dt6B1slsBy8ipJu9",
+    "Gagner? de l’argent": "Compendium.pf2e.actionspf2e.QyzlsLrqM0EEwd7j",
+    "S'échapper?": "Compendium.pf2e.actionspf2e.SkZAQRkLLkmBQNB9",
+    "Feinter?": "Compendium.pf2e.actionspf2e.QNAVeNKtHA0EUw4X",
+    "Forcer? l'ouverture": "Compendium.pf2e.actionspf2e.SjmKHgI7a5Z9JzBx",
+    "Se raccrocher? in extremis": "Compendium.pf2e.actionspf2e.3yoajuKjwHZ9ApUY",
+    "Saisi(r|t)": "Compendium.pf2e.actionspf2e.PMbdMWc2QroouFGD",
+    "Sauter? en hauteur": "Compendium.pf2e.actionspf2e.2HJ4yuEFY1Cast4h",
+    "Sauter? en longueur": "Compendium.pf2e.actionspf2e.JUvAvruz7yRQXfz2",
+    "Bondi(r|t)": "Compendium.pf2e.actionspf2e.d5I6018Mci2SWokk",
+    "Pas libérateur": "Compendium.pf2e.actionspf2e.IX1VlVCL5sFTptEE",
+    "Fai(re|t) bonne impression": "Compendium.pf2e.actionspf2e.OX4fy22hQgUHDr0q",
+    "Se met(tre)? en selle": "Compendium.pf2e.actionspf2e.PM5jvValFkbFH3TV",
+    "Se produi(re|t)": "Compendium.pf2e.actionspf2e.EEDElIyin4z60PXx",
+    "Chercher?": "Compendium.pf2e.actionspf2e.BlAOM2X92SI6HMtJ",
+    "Fouiller?": "Compendium.pf2e.actionspf2e.TiNDYUGlMmxzxBYU",
+    "Deviner? les intentions": "Compendium.pf2e.actionspf2e.1xRFPTFtWtGJ9ELw",
+    "Pousser?": "Compendium.pf2e.actionspf2e.7blmbDrQFNfdT731",
+    "Se cacher?": "Compendium.pf2e.actionspf2e.XMcnh4cSI32tljXa",
+    "Voler?": "Compendium.pf2e.actionspf2e.RDXXE7wMrSPCLv5k",
+    "Vol": "Compendium.pf2e.actionspf2e.cS9nfDRGD83bNU1p",
+    "Mise à l'abri": "Compendium.pf2e.actionspf2e.ust1jJSCZQUhBZIz",
+    "Pister?": "Compendium.pf2e.actionspf2e.EA5vuSgJfiHH7plD",
+    "Soigner? les maladies": "Compendium.pf2e.actionspf2e.TC7OcDa7JlWbqMaN",
+    "Soigner? un empoisonnement": "Compendium.pf2e.actionspf2e.KjoCEEmPGTeFE4hh",
+    "Soigner? les blessures": "Compendium.pf2e.actionspf2e.1kGNdIIhuglAjIp9",
+    "Croc-en-jambe": "Compendium.pf2e.actionspf2e.ge56Lu1xXVFYUnLP",
+    "Déplacement acrobatique": "Compendium.pf2e.actionspf2e.21WIfSu7Xd7uKqV8"
+}
 
 LOCALIZE_SAVES_ROLLS = {
     "réflexes": "reflex",
@@ -93,7 +115,6 @@ LOCALIZE_CONDITIONS = {
     "Stupefiée?s?": "e1XGnhKNSQIm5IXg",
     "Étourdie?s?": "dfCMdR4wnpbYNTix"
 }
-LOCALIZE_PATTERN_CONDITIONS = re.compile(r'\b(' + '|'.join(LOCALIZE_CONDITIONS.keys()) + r')\b')
 
 LOCALIZE_TEMPLATES = {
     "émanation": "emanation",
@@ -143,7 +164,9 @@ def convert_to_lower(match_obj):
 
 
 def action_sub(string, action):
-    return sub(r"\b" + action + r"\b", r"@Compendium[pf2e.actionspf2e.%s]{%s}" % (action, action), string, count=1)
+    return sub(r"\b(" + action + r")\b",
+               r"@UUID[%s]{\g<0>}" % LOCALIZE_ACTIONS[action],
+               string, count=1)
 
 
 def condition_sub(string, condition):
@@ -158,18 +181,6 @@ def condition_sub_with_stage(string, condition, stage):
                string, count=1)
 
 
-def equipment_sub(string, equipment):
-    return sub(equipment, r"@Compendium[pf2e.equipment-srd.%s]{%s}" % (equipment, equipment), string, count=1)
-
-
-def feat_sub(string, feat):
-    return sub(feat, r"@Compendium[pf2e.feats-srd.%s]{%s}" % (feat, feat), string, count=1)
-
-
-def spell_sub(string, spell):
-    return sub(spell, r"<em>@Compendium[pf2e.spells-srd.%s]{%s}</em>" % (spell, spell), string, count=1)
-
-
 def handle_actions(string):
     for action in ACTIONS:
         string = action_sub(string, action)
@@ -181,38 +192,11 @@ def handle_conditions(string):
         string = condition_sub(string, condition)
 
     # Handle this one manually due to the lack of hyphen.
-    string = sub(r"pris au dépourvu", r"%sFlat-Footed]{Pris au dépourvu}" % CONDITION_COMPENDIUM, string, count=1)
+    string = sub(r"pris au dépourvu", r"%sAJh5ex99aV6VTggg]{Pris au dépourvu}" % CONDITION_COMPENDIUM, string, count=1)
 
     for condition in NUMBERED_CONDITIONS:
         for i in range(1, 6):
             string = condition_sub_with_stage(string, condition, i)
-    return string
-
-
-def handle_equipment(string):
-    for equipment in EQUIPMENT:
-        string = equipment_sub(string, equipment)
-    return string
-
-
-def handle_feats(string):
-    for feat in FEATS:
-        string = feat_sub(string, feat)
-    return string
-
-
-def handle_spells(string):
-    for spell in SPELLS:
-        string = spell_sub(string, spell)
-    return string
-
-
-def handle_activation_actions(string):
-    string = sub(r"\[free-action\]", r"<span class=\"pf2-icon\">F</span>", string)
-    string = sub(r"\[reaction\]", r"<span class=\"pf2-icon\">R</span>", string)
-    string = sub(r"\[one-action\]", r"<span class=\"pf2-icon\">1</span>", string)
-    string = sub(r"\[two-actions\]", r"<span class=\"pf2-icon\">2</span>", string)
-    string = sub(r"\[three-actions\]", r"<span class=\"pf2-icon\">3</span>", string)
     return string
 
 
@@ -226,8 +210,8 @@ def handle_damage_rolls(string):
                            f"{{{x.group(1)}{x.group(2) or ''}{x.group(3) or ''} dégât"
                            f"{x.group(4) if x.group(4) is not None else ''}"
                            f"{x.group(5) if x.group(5) is not None else ''}"
-                           f"{x.group(6)+x.group(7) if x.group(7) in LOCALIZE_DAMAGE else ''}"
-                           f"{x.group(8) or ''}}}{x.group(6)+x.group(7) if x.group(7) not in LOCALIZE_DAMAGE else ''}"
+                           f"{x.group(6) + x.group(7) if x.group(7) in LOCALIZE_DAMAGE else ''}"
+                           f"{x.group(8) or ''}}}{x.group(6) + x.group(7) if x.group(7) not in LOCALIZE_DAMAGE else ''}"
                  , string)
     string = sub(r"\[\]", "", string)
     string = sub(r"(\d+)d(\d+) (\w+)(\,|\.)", r"[[/r \1d\2 #\3]]{\1d\2 \3}\4", string)
@@ -261,52 +245,12 @@ def handle_templates(string):
     return LOCALIZE_PATTERN_TEMPLATES.sub(lambda x: LOCALIZE_TEMPLATES[x.group()], string)
 
 
-def handle_third_party(string):
-    # Handling for 3rd party formatting.
-    string = sub(r"» (Réussite critique|Réussite|Échec|Échec critique)", r"</p><p><strong>\1</strong>", string)
-    string = sub(r"»", r"•", string)
-    return string
-
-
-def handle_background(string):
-    string = sub(r"Choose two ability boosts.", r"</p><p>Choose two ability boosts.", string)
-    string = sub(r"%s" % ABILITY_SCORES, r"<strong>\1</strong>", string, count=2)
-    string = sub(r"You're trained in", r"</p><p>You're trained in", string)
-    string = sub(r"You gain the (.*) skill feat", r"You gain the @Compendium[pf2e.feats-srd.\1]{\1} skill feat", string)
-    return string
-
-
 def handle_aura(string):
-    string = sub(r"<p>(\d+) feet.",
-                 r"<p>@Template[type:emanation|distance:\1] @Compendium[pf2e.bestiary-ability-glossary-srd.Aura]{Aura}</p><p>",
+    string = sub(r"<p>(\d+) m.",
+                 lambda x: "<p>@Template[type:emanation|distance:" + str(int(float(x.group(1).replace(",", ".")) * 10 / 3)) +
+                           "] @UUID[Compendium.pf2e.bestiary-ability-glossary-srd.v61oEQaDdcRpaZ9X]{Aura}</p><p>",
                  string)
     return string
-
-
-def companion_format(string):
-    string = sub(r"Size (Tiny|Small|Medium|Large)", r"<p><strong>Size</strong> \1</p>", string)
-    string = sub(r"Melee \? (\w+)(,|;) Damage (\d+)d(\d+) (\w+)",
-                 r"<p><strong>Melee</strong> <span class='pf2-icon'>1</span> \1, <strong>Damage</strong> \3d\4 \5</p>",
-                 string)
-    string = sub(r"Melee \? (\w+) \(([^\)]+)\)(,|;) Damage (\d+)d(\d+) (\w+)",
-                 r"<p><strong>Melee</strong> <span class='pf2-icon'>1</span> \1 (\2), <strong>Damage</strong> \4d\5 \6</p>",
-                 string)
-    string = sub(r"Str ", r"<p><strong>Str</strong> ", string)
-    string = sub(r"(Dex|Con|Int|Wis|Cha) ", r"<strong>\1</strong> ", string)
-    string = sub(r"Hit Points (\d+)", r"</p><p><strong>Hit Points</strong> \1</p>", string)
-    string = sub(r"(Skill|Senses|Speed|Support Benefit|Advanced Maneuver)", r"</p><p><strong>\1</strong>", string)
-    return string
-
-
-def eidolon_format(string):
-    string = sub(
-        r"(Tradition|Traits|Alignment|Home Plane|Size|Suggested Attacks|Skills|Senses|Language|Speed|Eidolon Abilities)",
-        r"</p><p><strong>\1</strong>", string)
-    string = sub(
-        r"(\w+) (\w+) Str (\d+), Dex (\d+), Con (\d+), Int (\d+), Wis (\d+), Cha (\d+); \+(\d+) AC \(\+(\d+) Dex cap\)",
-        r"</p><p><strong>\1 \2</strong> Str \3, Dex \4, Con \5, Int \6, Wis \7, Cha \8; +\9 AC (+\10 Dex cap)", string)
-    return string
-
 
 def handle_inlines_checks(string):
     # Skills and saves
@@ -330,37 +274,9 @@ def handle_inlines_checks(string):
 
     return LOCALIZE_PATTERN_SAVES_ROLLS.sub(lambda x: LOCALIZE_SAVES_ROLLS[x.group()], string)
 
-
-def handle_counteract(string):
-    string = sub(r"counteract modifier of \+(\d+)", r"counteract modifier of [[/r 1d20+\1 #Counteract]]{+\1}", string)
-    string = sub(r"\+(\d+) counteract modifier", r"[[/r 1d20+\1 #Counteract]]{+\1} counteract modifier", string)
-    return string
-
-
-def ancestry_format(string):
-    string = sub(r"(?i)Y\s*O\s*U M\s*I\s*G\s*H\s*T\s*...", r"</p><h2>You Might...</h2>", string)
-    string = sub(r"O\s*T\s*H\s*E\s*R\s*S P\s*R\s*O\s*B\s*A\s*B\s*L\s*Y\s*...", r"</ul><h2>Others Probably...</h2><ul>",
-                 string, flags=re.IGNORECASE)
-    string = sub(r"(?i)P\s*H\s*Y\s*S\s*I\s*C\s*A\s*L D\s*E\s*S\s*C\s*R\s*I\s*P\s*T\s*I\s*O\s*N",
-                 r"</ul><h2>Physical Description</h2><p>", string)
-    string = sub(r"(?i)S\s*O\s*C\s*I\s*E\s*T\s*Y", r"</p><h2>Society</h2><p>", string)
-    string = sub(r"(?i)A\s*L\s*I\s*G\s*N\s*M\s*E\s*N\s*T A\s*N\s*D R\s*E\s*L\s*I\s*G\s*I\s*O\s*N",
-                 r"</p><h2>Alignment and religion</h2><p>", string)
-    string = sub(r"NAMES", r"</p><h2>Names</h2><p>", string)
-    string = sub(r"(?i)S\s*a\s*m\s*p\s*l\s*e N\s*a\s*m\s*e\s*S", r"</p><h3>Sample Names</h3><p>", string)
-    return string
-
-
 def handle_areas(string):
     string = sub(r" ([A-Z][0-9]{1,3})", r" <strong>\1</strong>", string)
     return string
-
-
-def handle_innate_spell_links(string):
-    string = sub(r"You can cast (\w+) (.*?) innate",
-                 r"You can cast <em>@Compendium[pf2e.spells-srd.\1]{\1}</em> \2 innate", string)
-    return string
-
 
 def reformat(text, third_party=False, companion=False, eidolon=False, ancestry=False, use_clipboard=True,
              add_gm_text=True, inline_rolls=True, add_conditions=True, add_actions=True, add_inline_checks=True,
@@ -393,18 +309,6 @@ def reformat(text, third_party=False, companion=False, eidolon=False, ancestry=F
     string = sub("Prérequis", "<p><strong>Prérequis</strong>", string, count=1)
     string = sub(r"Activation \?", r"</p><p><strong>Activation</strong> <span class='pf2-icon'>1</span>", string)
 
-    if third_party:
-        string = handle_third_party(string)
-
-    if companion:
-        string = companion_format(string)
-
-    if eidolon:
-        string = eidolon_format(string)
-
-    if ancestry:
-        string = ancestry_format(string)
-
     if add_inline_checks:
         string = handle_inlines_checks(string)
 
@@ -423,19 +327,8 @@ def reformat(text, third_party=False, companion=False, eidolon=False, ancestry=F
     if add_actions:
         string = handle_actions(string)
 
-    string = handle_equipment(string)
-    string = handle_feats(string)
-    string = handle_spells(string)
-    # string = handle_innate_spell_links(string)
-    string = handle_counteract(string)
-
-    string = handle_activation_actions(string)
     string = handle_aura(string)
-
     string = handle_areas(string)
-
-    if "Choose two ability boosts" in string:
-        string = handle_background(string)
 
     string = string.replace("<p></p>", "").replace("<p><p>", "<p>")
     string = string.replace(" <p>", "</p><p>")
@@ -453,9 +346,6 @@ def reformat(text, third_party=False, companion=False, eidolon=False, ancestry=F
                                 "<p data-visibility='gm'><strong>Déclencheur</strong>")
         string = string.replace("<p><strong>Conditions</strong>", "<p data-visibility='gm'><strong>Conditions</strong>")
         string = string.replace("<p><strong>Fréquence</strong>", "<p data-visibility='gm'><strong>Fréquence</strong>")
-
-    # print("\n")
-    # print(string)
 
     if use_clipboard:
         copy(string)
@@ -499,10 +389,6 @@ outputText.place(relx=0.51, rely=0.2, relwidth=0.49, relheight=0.8)
 
 ## Settings
 ###############################################################################
-third_party = BooleanVar()
-companion = BooleanVar()
-eidolon = BooleanVar()
-ancestry = BooleanVar()
 use_clipboard = BooleanVar(value=True)
 add_gm_text = BooleanVar(value=False)
 inline_rolls = BooleanVar(value=True)
@@ -512,23 +398,7 @@ add_inline_checks = BooleanVar(value=True)
 add_inline_templates = BooleanVar(value=True)
 remove_non_ASCII = BooleanVar(value=True)
 
-# # handleThirdParty = Checkbutton(text = "Support Third Party", variable = third_party)
-# # handleThirdParty.place(relx = 0.3, rely= 0)
-
-# # handleCompanion = Checkbutton(text = "Animal Companion", variable = companion)
-# # handleCompanion.place(relx = 0.3, rely= 0.05)
-
-# # handleEidolon = Checkbutton(text = "Eidolon", variable = eidolon)
-# # handleEidolon.place(relx = 0.3, rely= 0.1)
-
-# # handleAncestry = Checkbutton(text = "Ancestry", variable = ancestry)
-# # handleAncestry.place(relx = 0.5, rely= 0.0)
-
-# # useClipboard = Checkbutton(text = "Copy Output to Clipboard", variable = use_clipboard)
-# # useClipboard.place(relx = 0.5, rely= 0.05)
 ###############################################################################
-
-
 # Build settings menu
 ##############################################################################
 
@@ -543,10 +413,6 @@ settings_menu.add_checkbutton(label="Add Inline Checks", variable=add_inline_che
 settings_menu.add_checkbutton(label="Add Condition Links", variable=add_conditions)
 settings_menu.add_checkbutton(label="Add Action Links", variable=add_actions)
 settings_menu.add_checkbutton(label="Remove non-ASCII characters", variable=remove_non_ASCII)
-settings_menu.add_checkbutton(label="Handle Animal Companion Blocks", variable=companion)
-settings_menu.add_checkbutton(label="Handle Eidolon Blocks", variable=eidolon)
-settings_menu.add_checkbutton(label="Handle Ancestry Description Text", variable=ancestry)
-settings_menu.add_checkbutton(label="Handle Third Party Formatting", variable=third_party)
 
 menu.add_cascade(label="Settings", menu=settings_menu)
 root.config(menu=menu)
@@ -554,8 +420,7 @@ root.config(menu=menu)
 ##############################################################################
 
 reformatButton = Button(root, text="Reformat Text",
-                        command=lambda: reformat(inputText.get("1.0", "end-1c"), third_party.get(), companion.get(),
-                                                 eidolon.get(), ancestry.get(), use_clipboard.get(), add_gm_text.get(),
+                        command=lambda: reformat(inputText.get("1.0", "end-1c"), use_clipboard.get(), add_gm_text.get(),
                                                  inline_rolls.get(), add_conditions.get(), add_actions.get(),
                                                  add_inline_checks.get(), add_inline_templates.get(),
                                                  remove_non_ASCII.get()))
@@ -566,7 +431,6 @@ resetButton.place(relx=0, rely=0, relwidth=0.25, relheight=0.2)
 
 
 def main():
-    # reformat(input(), third_party = False, companion = False, eidolon = False, ancestry = False, use_clipboard=True, add_gm_text = False, inline_rolls = True, add_conditions = True, add_inline_checks = True, add_inline_templates = True, remove_non_ASCII = True)
     root.mainloop()
 
 
