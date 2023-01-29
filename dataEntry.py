@@ -117,10 +117,10 @@ LOCALIZE_CONDITIONS = {
 }
 
 LOCALIZE_TEMPLATES = {
-    "émanation": "emanation",
-    "explosion": "burst",
-    "cône": "cone",
-    "ligne": "line"
+    "type:émanation": "type:emanation",
+    "type:explosion": "type:burst",
+    "type:cône": "type:cone",
+    "type:ligne": "type:line"
 }
 LOCALIZE_PATTERN_TEMPLATES = re.compile(r'\b(' + '|'.join(LOCALIZE_TEMPLATES.keys()) + r')\b')
 
