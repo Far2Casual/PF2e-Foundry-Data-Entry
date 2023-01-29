@@ -203,7 +203,7 @@ def handle_conditions(string):
 def handle_damage_rolls(string):
     string = sub(r" (\d)d(\d) (rounds|minutes|heures|jours)", r" [[/r \1d\2 #\3]]{\1d\2 \3}", string)
     string = sub(r"(\d+)(d\d+)?(\+\d+)? dégât(s)?( d\'éclaboussures?)?(\sde\s|\sd\'|\s)(\w*)( persistants?)?",
-                 lambda x: f"[[/r {{{x.group(1)}{x.group(2) or ''}{x.group(3) or ''}}}"
+                 lambda x: f"[[/r {x.group(1)}{x.group(2) or ''}{x.group(3) or ''}"
                            f"[{'persistent,' if x.group(8) is not None else ''}"
                            f"{'splash,' if x.group(5) is not None else ''}"
                            f"{LOCALIZE_DAMAGE[x.group(7)] if x.group(7) in LOCALIZE_DAMAGE else ''}]]]"
@@ -247,8 +247,10 @@ def handle_templates(string):
 
 def handle_aura(string):
     string = sub(r"<p>(\d+) m.",
-                 lambda x: "<p>@Template[type:emanation|distance:" + str(int(float(x.group(1).replace(",", ".")) * 10 / 3)) +
-                           "] @UUID[Compendium.pf2e.bestiary-ability-glossary-srd.v61oEQaDdcRpaZ9X]{Aura}</p><p>",
+                 lambda x: "<p>@UUID[Compendium.pf2e.bestiary-ability-glossary-srd.v61oEQaDdcRpaZ9X]{Aura} " +
+                           "@Template[type:emanation|distance:" +
+                           str(int(float(x.group(1).replace(",", ".")) * 10 / 3)) + "]{" + x.group(1) +
+                           " m}</p><hr /><p>",
                  string)
     return string
 
@@ -297,12 +299,12 @@ def reformat(text, third_party=False, companion=False, eidolon=False, ancestry=F
         .replace(r"“", r'"') \
         .replace("Durée maximale", "</p><p><strong>Durée maximale</strong>") \
         .replace("Délai", "</p><p><strong>Délai</strong>") \
-        .replace("Jet de sauvegarde", "</p><p><strong>Jet de sauvegarde</strong>")
+        .replace("Jet de sauvegarde", "</p><hr /><p><strong>Jet de sauvegarde</strong>")
 
     if remove_non_ASCII:
         string = string.replace("’", "'")
 
-    string = sub(r"(Condition|Conditions)", r"<p><strong>Conditions</strong>", string)
+    string = sub(r"(Condition(s)?)", r"<p><strong>Conditions</strong>", string)
 
     string = sub(r"Stade (\d)", r"</p><p><strong>Stade \1</strong>", string)
 
@@ -343,9 +345,9 @@ def reformat(text, third_party=False, companion=False, eidolon=False, ancestry=F
 
     if add_gm_text:
         string = string.replace("<p><strong>Déclencheur</strong>",
-                                "<p data-visibility='gm'><strong>Déclencheur</strong>")
-        string = string.replace("<p><strong>Conditions</strong>", "<p data-visibility='gm'><strong>Conditions</strong>")
-        string = string.replace("<p><strong>Fréquence</strong>", "<p data-visibility='gm'><strong>Fréquence</strong>")
+                                "<p><strong>Déclencheur</strong>")
+        string = string.replace("<p><strong>Conditions</strong>", "<p><strong>Conditions</strong>")
+        string = string.replace("<p><strong>Fréquence</strong>", "<p><strong>Fréquence</strong>")
 
     if use_clipboard:
         copy(string)
