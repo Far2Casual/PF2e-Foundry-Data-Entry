@@ -203,7 +203,10 @@ def handle_conditions(string):
 def handle_damage_rolls(string):
     string = sub(r" (\d)d(\d) (rounds|minutes|heures|jours)", r" [[/r \1d\2 #\3]]{\1d\2 \3}", string)
     string = sub(r"(\d+)(d\d+)?(\+\d+)? dégât(s)?( d\'éclaboussures?)?(\sde\s|\sd\'|\s)(\w*)( persistants?)?",
-                 lambda x: f"[[/r {x.group(1)}{x.group(2) or ''}{x.group(3) or ''}"
+                 lambda x: f"[[/r "
+                           f"{'(' if x.group(3) is not None else ''}"
+                           f"{x.group(1)}{x.group(2) or ''}{x.group(3) or ''}"
+                           f"{')' if x.group(3) is not None else ''}"
                            f"[{'persistent,' if x.group(8) is not None else ''}"
                            f"{'splash,' if x.group(5) is not None else ''}"
                            f"{LOCALIZE_DAMAGE[x.group(7)] if x.group(7) in LOCALIZE_DAMAGE else ''}]]]"
@@ -229,8 +232,8 @@ def handle_spell_heightening(string):
 
 def handle_bullet_lists(string):
     # Removing bullet points, should replace with the actual bullet points.
-    string = sub(r"•", "<ul><li>", string, count=1)
-    string = sub(r"•", "</li><li>", string)
+    string = sub(r"•", "<ul>\n<li>", string, count=1)
+    string = sub(r"•", "</li>\n<li>", string)
     return string
 
 
@@ -250,7 +253,7 @@ def handle_aura(string):
                  lambda x: "<p>@UUID[Compendium.pf2e.bestiary-ability-glossary-srd.v61oEQaDdcRpaZ9X]{Aura} " +
                            "@Template[type:emanation|distance:" +
                            str(int(float(x.group(1).replace(",", ".")) * 10 / 3)) + "]{" + x.group(1) +
-                           " m}</p><hr /><p>",
+                           " m}</p>\n<hr />\n<p>",
                  string)
     return string
 
@@ -284,22 +287,22 @@ def reformat(text, third_party=False, companion=False, eidolon=False, ancestry=F
              add_gm_text=True, inline_rolls=True, add_conditions=True, add_actions=True, add_inline_checks=True,
              add_inline_templates=True, remove_non_ASCII=True):
     # Initial handling not using regex.
-    string = "<p>" + text.replace("Déclencheur", "<p><strong>Déclencheur</strong>") \
-        .replace("\nSuccès critique", "</p><hr /><p><strong>Réussite critique</strong>") \
-        .replace("\nSuccès", "</p><p><strong>Réussite</strong>") \
-        .replace("\nÉchec critique", "</p><p><strong>Échec critique</strong>") \
-        .replace("\nÉchec", "</p><p><strong>Échec</strong>") \
-        .replace("\nSpécial", "</p><p><strong>Spécial</strong>") \
+    string = "<p>" + text.replace("Déclencheur.", "<p><strong>Déclencheur</strong>") \
         .replace("\n", " ") \
+        .replace("Succès critique.", "</p>\n<hr />\n<p><strong>Succès critique</strong>") \
+        .replace("Succès.", "</p>\n<p><strong>Succès</strong>") \
+        .replace("Échec critique.", "</p>\n<p><strong>Échec critique</strong>") \
+        .replace("Échec.", "</p>\n<p><strong>Échec</strong>") \
+        .replace("Spécial.", "</p>\n<p><strong>Spécial</strong>") \
         .replace("Fréquence", "<p><strong>Fréquence</strong>") \
-        .replace("Effet", "</p><hr /><p><strong>Effet</strong>") \
+        .replace("Effet.", "</p>\n<hr /><p><strong>Effet</strong>") \
         .replace("Coût", "<strong>Coût</strong>") + "</p>"
     string = string.replace("<p><p>", "<p>") \
         .replace(r"”", r'"') \
         .replace(r"“", r'"') \
-        .replace("Durée maximale", "</p><p><strong>Durée maximale</strong>") \
-        .replace("Délai", "</p><p><strong>Délai</strong>") \
-        .replace("Jet de sauvegarde", "</p><hr /><p><strong>Jet de sauvegarde</strong>")
+        .replace("Durée maximale", "</p>\n<p><strong>Durée maximale</strong>") \
+        .replace("Délai", "</p>\n<p><strong>Délai</strong>") \
+        .replace("Jet de sauvegarde", "</p>\n<hr />\n<p><strong>Jet de sauvegarde</strong>")
 
     if remove_non_ASCII:
         string = string.replace("’", "'")
@@ -375,7 +378,7 @@ Width = 800
 
 root = Tk()
 
-root.title("PF2e on Foundry VTT Data Entry v 2.5.2")
+root.title("PF2e on Foundry VTT Data Entry v 1.0.0")
 
 canvas = Canvas(root, height=Height, width=Width)
 canvas.pack()
