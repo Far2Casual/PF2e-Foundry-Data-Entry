@@ -26,7 +26,7 @@ CONDITIONS = ["Aveuglée?s?", "Fatiguée?s?", "Confuse?s?", "Masquée?s?", "Ébl
               "Cachée?s?", "Accélérée?s?", "En fuite", "Empoignée?s?", "Entravée?s?"]
 
 NUMBERED_CONDITIONS = ["Maladroite?s?", "Condamnée?s?", "Drainée?s?", "Affaiblie?s?", "Ralentie?s?", "Effrayée?s?",
-                       "Malades?", "Étourdie?s?", "Stupefiée?s?", "Accélérée?s?"]
+                       "Malades?", "Étourdie?s?", "Stupéfiée?s?", "Accélérée?s?"]
 
 LOCALIZE_ACTIONS = {
     "(Être|Est) furtif": "Compendium.pf2e.actionspf2e.VMozDqMMuK5kpoX4",
