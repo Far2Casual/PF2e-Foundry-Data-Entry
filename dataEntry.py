@@ -112,7 +112,7 @@ LOCALIZE_CONDITIONS = {
     "Ralentie?s?": "xYTAsEpcJE1Ccni3",
     "Effrayée?s?": "TBSHQspnbcqxsmjL",
     "Malades?": "fesd1n5eVhpCSS18",
-    "Stupefiée?s?": "e1XGnhKNSQIm5IXg",
+    "Stupéfiée?s?": "e1XGnhKNSQIm5IXg",
     "Étourdie?s?": "dfCMdR4wnpbYNTix"
 }
 
