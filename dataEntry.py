@@ -216,6 +216,16 @@ def handle_damage_rolls(string):
                            f"{x.group(6) + x.group(7) if x.group(7) in LOCALIZE_DAMAGE else ''}"
                            f"{x.group(8) or ''}}}{x.group(6) + x.group(7) if x.group(7) not in LOCALIZE_DAMAGE else ''}"
                  , string)
+    string = sub(r"(\d+)(d\d+)?(\+\d+)? point(s)? de vie",
+                 lambda x: f"[[/r "
+                           f"{'(' if x.group(3) is not None else ''}"
+                           f"{x.group(1)}{x.group(2) or ''}{x.group(3) or ''}"
+                           f"{')' if x.group(3) is not None else ''}"
+                           f"[healing]]]"
+                           f"{{{x.group(1)}{x.group(2) or ''}{x.group(3) or ''} point"
+                           f"{x.group(4) if x.group(4) is not None else ''}"
+                           f" de vie}}"
+                 , string)
     string = sub(r"\[\]", "", string)
     string = sub(r"(\d+)d(\d+) (\w+)(\,|\.)", r"[[/r \1d\2 #\3]]{\1d\2 \3}\4", string)
     string = sub(r"(\d+)d(\d+)\.", r"[[/r \1d\2]]{\1d\2}.", string)
@@ -378,7 +388,7 @@ Width = 800
 
 root = Tk()
 
-root.title("PF2e on Foundry VTT Data Entry v 1.0.0")
+root.title("Foundry VTT Data Entry French v 1.1.0")
 
 canvas = Canvas(root, height=Height, width=Width)
 canvas.pack()
