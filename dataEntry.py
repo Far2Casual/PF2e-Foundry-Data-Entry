@@ -15,7 +15,7 @@ CONDITION_COMPENDIUM = r"@UUID[Compendium.pf2e.conditionitems."
 
 ACTIONS = ["(Être|Est) furtif", "Garder? l’équilibre", "Contrain(dre|t)", "Ramper?", "Fai(re|t) diversion",
            "Démoraliser?", "Désamorcer? un dispositif", "Désarmer?", "Gagner? de l’argent", "S'échapper?", "Feinter?",
-           "Forcer? l'ouverture", "Se raccrocher? in extremis", "Saisi(r|t)", "Sauter? en hauteur", "Crocheter"
+           "Forcer? l'ouverture", "Se raccrocher? in extremis", "Saisi(r|t)", "Sauter? en hauteur", "Crocheter",
            "Sauter? en longueur", "Bondi(r|t)", "Pas libérateur", "Fai(re|t) bonne impression", "Se met(tre)? en selle",
            "Se produi(re|t)", "Chercher?", "Fouiller?", "Deviner? les intentions", "Pousser?", "Se cacher?", "Voler?",
            "Vol", "Mise à l'abri", "Pister?", "Soigner? les maladies", "Soigner? un empoisonnement", "Solliciter?",
