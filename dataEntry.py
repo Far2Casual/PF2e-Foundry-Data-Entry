@@ -15,13 +15,13 @@ CONDITION_COMPENDIUM = r"@UUID[Compendium.pf2e.conditionitems."
 
 ACTIONS = ["(Être|Est) furtif", "Garder? l’équilibre", "Contrain(dre|t)", "Ramper?", "Fai(re|t) diversion",
            "Démoraliser?", "Désamorcer? un dispositif", "Désarmer?", "Gagner? de l’argent", "S'échapper?", "Feinter?",
-           "Forcer? l'ouverture", "Se raccrocher? in extremis", "Saisi(r|t)", "Sauter? en hauteur",
+           "Forcer? l'ouverture", "Se raccrocher? in extremis", "Saisi(r|t)", "Sauter? en hauteur", "Crocheter"
            "Sauter? en longueur", "Bondi(r|t)", "Pas libérateur", "Fai(re|t) bonne impression", "Se met(tre)? en selle",
            "Se produi(re|t)", "Chercher?", "Fouiller?", "Deviner? les intentions", "Pousser?", "Se cacher?", "Voler?",
-           "Vol", "Mise à l'abri", "Pister?", "Soigner? les maladies", "Soigner? un empoisonnement",
-           "Soigner? les blessures", "Croc-en-jambe", "Déplacement acrobatique"]
+           "Vol", "Mise à l'abri", "Pister?", "Soigner? les maladies", "Soigner? un empoisonnement", "Solliciter?",
+           "Soigner? les blessures", "Croc-en-jambe", "Déplacement acrobatique", "Se faufiler?"]
 
-CONDITIONS = ["Aveuglée?s?", "Fatiguée?s?", "Confuse?s?", "Masquée?s?", "Éblouie?s?", "Sourde?s?", "Invisibles?",
+CONDITIONS = ["Aveuglé?e?s?", "Fatiguée?s?", "Confuse?s?", "Masquée?s?", "Éblouie?s?", "Sourde?s?", "Invisibles?",
               "Prise?s? au dépourvu", "Immobilisée?s?", "Á terre", "Inconsciente?s?", "Fascinée?s?", "Paralysée?s?",
               "Cachée?s?", "Accélérée?s?", "En fuite", "Empoignée?s?", "Entravée?s?"]
 
@@ -63,7 +63,10 @@ LOCALIZE_ACTIONS = {
     "Soigner? un empoisonnement": "Compendium.pf2e.actionspf2e.KjoCEEmPGTeFE4hh",
     "Soigner? les blessures": "Compendium.pf2e.actionspf2e.1kGNdIIhuglAjIp9",
     "Croc-en-jambe": "Compendium.pf2e.actionspf2e.ge56Lu1xXVFYUnLP",
-    "Déplacement acrobatique": "Compendium.pf2e.actionspf2e.21WIfSu7Xd7uKqV8"
+    "Déplacement acrobatique": "Compendium.pf2e.actionspf2e.21WIfSu7Xd7uKqV8",
+    "Solliciter?": "Compendium.pf2e.actionspf2e.DCb62iCBrJXy0Ik6",
+    "Crocheter": "Compendium.pf2e.actionspf2e.2EE4aF4SZpYf0R6H",
+    "Se faufiler?": "Compendium.pf2e.actionspf2e.kMcV8e5EZUxa6evt"
 }
 
 LOCALIZE_SAVES_ROLLS = {
@@ -87,7 +90,7 @@ LOCALIZE_SAVES_ROLLS = {
 LOCALIZE_PATTERN_SAVES_ROLLS = re.compile(r'\b(' + '|'.join(LOCALIZE_SAVES_ROLLS.keys()) + r')\b')
 
 LOCALIZE_CONDITIONS = {
-    "Aveuglée?s?": "XgEqL1kFApUbl5Z2",
+    "Aveuglé?e?s?": "XgEqL1kFApUbl5Z2",
     "Fatiguée?s?": "HL2l2VRSaQHu9lUw",
     "Confuse?s?": "yblD8fOR1J8rDwEQ",
     "Masquée?s?": "DmAIPqOBomZ7H95W",
@@ -192,7 +195,7 @@ def handle_conditions(string):
         string = condition_sub(string, condition)
 
     # Handle this one manually due to the lack of hyphen.
-    string = sub(r"pris au dépourvu", r"%sAJh5ex99aV6VTggg]{Pris au dépourvu}" % CONDITION_COMPENDIUM, string, count=1)
+    # string = sub(r"pris au dépourvu", r"%sAJh5ex99aV6VTggg]{Pris au dépourvu}" % CONDITION_COMPENDIUM, string, count=1)
 
     for condition in NUMBERED_CONDITIONS:
         for i in range(1, 6):
@@ -388,7 +391,7 @@ Width = 800
 
 root = Tk()
 
-root.title("Foundry VTT Data Entry French v 1.1.0")
+root.title("Foundry VTT Data Entry French v 1.1.1")
 
 canvas = Canvas(root, height=Height, width=Width)
 canvas.pack()
