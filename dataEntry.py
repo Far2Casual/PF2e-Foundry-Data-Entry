@@ -156,7 +156,9 @@ LOCALIZE_DAMAGE = {
     "saignement": "bleed",
     "précision": "precision",
     "nécrotique": "necrotic",
-    "nécrotiques": "necrotic"
+    "nécrotiques": "necrotic",
+    "vide": "void",
+    "vitalité": "vitality"
 }
 LOCALIZE_PATTERN_DAMAGE = re.compile(r'\b(' + '|'.join(LOCALIZE_DAMAGE.keys()) + r')\b')
 
@@ -206,13 +208,13 @@ def handle_conditions(string):
 def handle_damage_rolls(string):
     string = sub(r" (\d)d(\d) (rounds|minutes|heures|jours)", r" [[/r \1d\2 #\3]]{\1d\2 \3}", string)
     string = sub(r"(\d+)(d\d+)?(\+\d+)? dégât(s)?( d\'éclaboussures?)?(\sde\s|\sd\'|\s)(\w*)( persistants?)?",
-                 lambda x: f"[[/r "
+                 lambda x: f"@Damage["
                            f"{'(' if x.group(3) is not None else ''}"
                            f"{x.group(1)}{x.group(2) or ''}{x.group(3) or ''}"
                            f"{')' if x.group(3) is not None else ''}"
                            f"[{'persistent,' if x.group(8) is not None else ''}"
                            f"{'splash,' if x.group(5) is not None else ''}"
-                           f"{LOCALIZE_DAMAGE[x.group(7)] if x.group(7) in LOCALIZE_DAMAGE else ''}]]]"
+                           f"{LOCALIZE_DAMAGE[x.group(7)] if x.group(7) in LOCALIZE_DAMAGE else ''}]]"
                            f"{{{x.group(1)}{x.group(2) or ''}{x.group(3) or ''} dégât"
                            f"{x.group(4) if x.group(4) is not None else ''}"
                            f"{x.group(5) if x.group(5) is not None else ''}"
@@ -296,11 +298,14 @@ def handle_areas(string):
     string = sub(r" ([A-Z][0-9]{1,3})", r" <strong>\1</strong>", string)
     return string
 
-def reformat(text, third_party=False, companion=False, eidolon=False, ancestry=False, use_clipboard=True,
+def reformat(text, use_clipboard=True,
              add_gm_text=True, inline_rolls=True, add_conditions=True, add_actions=True, add_inline_checks=True,
-             add_inline_templates=True, remove_non_ASCII=True):
+             add_inline_templates=True, remove_non_ASCII=True, remove_enclosing_html=False):
+    string = ""
+    if not remove_enclosing_html:
+        string += "<p>"
     # Initial handling not using regex.
-    string = "<p>" + text.replace("Déclencheur.", "<p><strong>Déclencheur</strong>") \
+    string += text.replace("Déclencheur.", "<p><strong>Déclencheur</strong>") \
         .replace("\n", " ") \
         .replace("Succès critique.", "</p>\n<hr />\n<p><strong>Succès critique</strong>") \
         .replace("Succès.", "</p>\n<p><strong>Succès</strong>") \
@@ -309,7 +314,9 @@ def reformat(text, third_party=False, companion=False, eidolon=False, ancestry=F
         .replace("Spécial.", "</p>\n<p><strong>Spécial</strong>") \
         .replace("Fréquence", "<p><strong>Fréquence</strong>") \
         .replace("Effet.", "</p>\n<hr /><p><strong>Effet</strong>") \
-        .replace("Coût", "<strong>Coût</strong>") + "</p>"
+        .replace("Coût", "<strong>Coût</strong>")
+    if not remove_enclosing_html:
+        string += "</p>"
     string = string.replace("<p><p>", "<p>") \
         .replace(r"”", r'"') \
         .replace(r"“", r'"') \
@@ -415,6 +422,7 @@ add_actions = BooleanVar(value=True)
 add_inline_checks = BooleanVar(value=True)
 add_inline_templates = BooleanVar(value=True)
 remove_non_ASCII = BooleanVar(value=True)
+remove_enclosing_html = BooleanVar(value=False)
 
 ###############################################################################
 # Build settings menu
@@ -431,6 +439,7 @@ settings_menu.add_checkbutton(label="Add Inline Checks", variable=add_inline_che
 settings_menu.add_checkbutton(label="Add Condition Links", variable=add_conditions)
 settings_menu.add_checkbutton(label="Add Action Links", variable=add_actions)
 settings_menu.add_checkbutton(label="Remove non-ASCII characters", variable=remove_non_ASCII)
+settings_menu.add_checkbutton(label="Remove enclosing <p>", variable=remove_enclosing_html)
 
 menu.add_cascade(label="Settings", menu=settings_menu)
 root.config(menu=menu)
@@ -441,7 +450,7 @@ reformatButton = Button(root, text="Reformat Text",
                         command=lambda: reformat(inputText.get("1.0", "end-1c"), use_clipboard.get(), add_gm_text.get(),
                                                  inline_rolls.get(), add_conditions.get(), add_actions.get(),
                                                  add_inline_checks.get(), add_inline_templates.get(),
-                                                 remove_non_ASCII.get()))
+                                                 remove_non_ASCII.get(), remove_enclosing_html.get()))
 reformatButton.place(relx=0.75, rely=0, relwidth=0.25, relheight=0.2)
 
 resetButton = Button(root, text="Clear Input", command=lambda: clearInput())

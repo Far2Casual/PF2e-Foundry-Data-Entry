@@ -1,5 +1,8 @@
 #Changelog
 
+#1.2.0
+- Changements des formats de dégâts
+
 #1.1.1
 - Gestion aveugle/aveuglé
 - Ajout Crocheter, Solliciter, Se faufiler
