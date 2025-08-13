@@ -120,12 +120,12 @@ LOCALIZE_CONDITIONS = {
 }
 
 LOCALIZE_TEMPLATES = {
-    "type:émanation": "type:emanation",
-    "type:explosion": "type:burst",
-    "type:cône": "type:cone",
-    "type:ligne": "type:line"
+    "émanation": "emanation",
+    "explosion": "burst",
+    "cône": "cone",
+    "ligne": "line"
 }
-LOCALIZE_PATTERN_TEMPLATES = re.compile(r'\b(' + '|'.join(LOCALIZE_TEMPLATES.keys()) + r')\b')
+LOCALIZE_PATTERN_TEMPLATES = re.compile(r'\b(' + "|".join(LOCALIZE_TEMPLATES.keys()) + r')\b')
 
 LOCALIZE_DAMAGE = {
     "contondant": "bludgeoning",
@@ -255,8 +255,8 @@ def handle_bullet_lists(string):
 def handle_templates(string):
     # Add template buttons
     string = sub(r"(émanation|explosion|cône|ligne|Émanation|Explosion|Cône|Ligne) de (\d+\,?\d?) (mètres|m)",
-                 r"@Template[type:\1|distance:\2]", string)
-    string = sub(r"type:%s" % r"(Émanation|Explosion|Cône|Ligne)", convert_to_lower, string)
+                 r"@Template[\1|distance:\2]", string)
+    string = sub(r"%s\|" % r"(Émanation|Explosion|Cône|Ligne)", convert_to_lower, string)
     string = sub(r"distance:(\d+\,?\d?)(]|\|)",
                  lambda x: "distance:" + str(int(float(x.group(1).replace(",", ".")) * 10 / 3)) + x.group(2), string)
 
@@ -266,7 +266,7 @@ def handle_templates(string):
 def handle_aura(string):
     string = sub(r"<p>(\d+) m.",
                  lambda x: "<p>@UUID[Compendium.pf2e.bestiary-ability-glossary-srd.v61oEQaDdcRpaZ9X]{Aura} " +
-                           "@Template[type:emanation|distance:" +
+                           "@Template[emanation|distance:" +
                            str(int(float(x.group(1).replace(",", ".")) * 10 / 3)) + "]{" + x.group(1) +
                            " m}</p>\n<hr />\n<p>",
                  string)
@@ -274,23 +274,23 @@ def handle_aura(string):
 
 def handle_inlines_checks(string):
     # Skills and saves
-    string = sub(r"jet de (\w+) basique %s" % DC, r"@Check[type:\1|dc:\2|basic:true]", string)
-    string = sub(r"%s %s" % (DC, SAVES), r"@Check[type:\2|dc:\1]", string)
-    string = sub(r"%s %s" % (SAVES, DC), r"@Check[type:\1|dc:\2]", string)
-    string = sub(r"%s \(%s\)" % (SAVES, DC), r"@Check[type:\1|dc:\2]", string)
-    string = sub(r"sauvegarde de %s \(%s\)" % (SAVES, DC), r"@Check[type:\1|dc:\2]", string)
+    string = sub(r"jet de (\w+) basique %s" % DC, r"@Check[\1|dc:\2|basic]", string)
+    string = sub(r"%s %s" % (DC, SAVES), r"@Check[\2|dc:\1]", string)
+    string = sub(r"%s %s" % (SAVES, DC), r"@Check[\1|dc:\2]", string)
+    string = sub(r"%s \(%s\)" % (SAVES, DC), r"@Check[\1|dc:\2]", string)
+    string = sub(r"sauvegarde de %s \(%s\)" % (SAVES, DC), r"@Check[\1|dc:\2]", string)
 
-    string = sub(r"%s %s" % (DC, SKILLS), r"@Check[type:\2|dc:\1]", string)
-    string = sub(r"%s %s" % (SKILLS, DC), r"@Check[type:\1|dc:\2]", string)
-    string = sub(r"%s \(%s\)" % (SKILLS, DC), r"@Check[type:\1|dc:\2", string)
+    string = sub(r"%s %s" % (DC, SKILLS), r"@Check[\2|dc:\1]", string)
+    string = sub(r"%s %s" % (SKILLS, DC), r"@Check[\1|dc:\2]", string)
+    string = sub(r"%s \(%s\)" % (SKILLS, DC), r"@Check[\1|dc:\2", string)
 
-    string = sub(r"(\w+) Lore %s" % DC, r"@Check[type:\2|dc:\1]", string)
-    string = sub(r"%s (\w+) save" % DC, r"@Check[type:\2|dc:\1]", string)
-    string = sub(r"%s flat check" % DC, r"@Check[type:flat|dc:\1]", string)
+    string = sub(r"(\w+) Lore %s" % DC, r"@Check[\2|dc:\1]", string)
+    string = sub(r"%s (\w+) save" % DC, r"@Check[\2|dc:\1]", string)
+    string = sub(r"%s flat check" % DC, r"@Check[flat|dc:\1]", string)
 
     # Catch capitalized saves
-    string = sub(r"type:%s" % SAVES, convert_to_lower, string)
-    string = sub(r"type:%s" % SKILLS, convert_to_lower, string)
+    string = sub(r"%s\|" % SAVES, convert_to_lower, string)
+    string = sub(r"%s\|" % SKILLS, convert_to_lower, string)
 
     return LOCALIZE_PATTERN_SAVES_ROLLS.sub(lambda x: LOCALIZE_SAVES_ROLLS[x.group()], string)
 
@@ -313,7 +313,7 @@ def reformat(text, use_clipboard=True,
         .replace("Échec.", "</p>\n<p><strong>Échec</strong>") \
         .replace("Spécial.", "</p>\n<p><strong>Spécial</strong>") \
         .replace("Fréquence", "<p><strong>Fréquence</strong>") \
-        .replace("Effet.", "</p>\n<hr /><p><strong>Effet</strong>") \
+        .replace("Effet.", "</p>\n<hr />\n<p><strong>Effet</strong>") \
         .replace("Coût", "<strong>Coût</strong>")
     if not remove_enclosing_html:
         string += "</p>"
@@ -398,7 +398,7 @@ Width = 800
 
 root = Tk()
 
-root.title("Foundry VTT Data Entry French v 1.1.1")
+root.title("Foundry VTT Data Entry French v 1.2.0")
 
 canvas = Canvas(root, height=Height, width=Width)
 canvas.pack()
