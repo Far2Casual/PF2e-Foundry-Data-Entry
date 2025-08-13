@@ -305,7 +305,7 @@ def reformat(text, use_clipboard=True,
     if not remove_enclosing_html:
         string += "<p>"
     # Initial handling not using regex.
-    string += text.replace("Déclencheur.", "<p><strong>Déclencheur</strong>") \
+    string += text.replace("Déclencheur", "<p><strong>Déclencheur</strong>") \
         .replace("\n", " ") \
         .replace("Succès critique.", "</p>\n<hr />\n<p><strong>Succès critique</strong>") \
         .replace("Succès.", "</p>\n<p><strong>Succès</strong>") \
