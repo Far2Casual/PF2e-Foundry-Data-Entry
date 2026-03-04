@@ -19,11 +19,11 @@ ACTIONS = ["(Être|Est) furtif", "Garder? l’équilibre", "Contrain(dre|t)", "R
            "Sauter? en longueur", "Bondi(r|t)", "Pas libérateur", "Fai(re|t) bonne impression", "Se met(tre)? en selle",
            "Se produi(re|t)", "Chercher?", "Fouiller?", "Deviner? les intentions", "Pousser?", "Se cacher?", "Voler?",
            "Vol", "Mise à l'abri", "Pister?", "Soigner? les maladies", "Soigner? un empoisonnement", "Solliciter?",
-           "Soigner? les blessures", "Croc-en-jambe", "Déplacement acrobatique", "Se faufiler?"]
+           "Soigner? les blessures", "Croc-en-jambe", "Déplacement acrobatique", "Se faufiler?", "Repositionner?"]
 
 CONDITIONS = ["Aveuglé?e?s?", "Fatiguée?s?", "Confuse?s?", "Masquée?s?", "Éblouie?s?", "Sourde?s?", "Invisibles?",
               "Prise?s? au dépourvu", "Immobilisée?s?", "Á terre", "Inconsciente?s?", "Fascinée?s?", "Paralysée?s?",
-              "Cachée?s?", "Accélérée?s?", "En fuite", "Empoignée?s?", "Entravée?s?"]
+              "Cachée?s?", "Accélérée?s?", "En fuite", "Empoignée?s?", "Entravée?s?", "Prise?s? par surprise"]
 
 NUMBERED_CONDITIONS = ["Maladroite?s?", "Condamnée?s?", "Drainée?s?", "Affaiblie?s?", "Ralentie?s?", "Effrayée?s?",
                        "Malades?", "Étourdie?s?", "Stupéfiée?s?", "Accélérée?s?"]
@@ -66,28 +66,30 @@ LOCALIZE_ACTIONS = {
     "Déplacement acrobatique": "Compendium.pf2e.actionspf2e.21WIfSu7Xd7uKqV8",
     "Solliciter?": "Compendium.pf2e.actionspf2e.DCb62iCBrJXy0Ik6",
     "Crocheter": "Compendium.pf2e.actionspf2e.2EE4aF4SZpYf0R6H",
-    "Se faufiler?": "Compendium.pf2e.actionspf2e.kMcV8e5EZUxa6evt"
+    "Se faufiler?": "Compendium.pf2e.actionspf2e.kMcV8e5EZUxa6evt",
+    "Repositionner?": "Compendium.pf2e.actionspf2e.Item.lOE4yjUnETTdaf2T"
 }
 
 LOCALIZE_SAVES_ROLLS = {
-    "réflexes": "reflex",
-    "vigueur": "fortitude",
-    "volonté": "will",
-    "acrobaties": "acrobatics",
-    "arcanes": "arcane",
-    "athlétisme": "athletics",
-    "artisanat": "crafting",
-    "duperie": "deception",
-    "diplomatie": "diplomacy",
-    "médecine": "medecine",
-    "occultisme": "occultism",
-    "représentation": "performance",
-    "société": "society",
-    "discrétion": "stealth",
-    "survie": "survival",
-    "vol": "thievery"
+    "réflexes|": "reflex|",
+    "vigueur|": "fortitude|",
+    "volonté|": "will|",
+    "acrobaties|": "acrobatics|",
+    "arcanes|": "arcane|",
+    "athlétisme|": "athletics|",
+    "artisanat|": "crafting|",
+    "duperie|": "deception|",
+    "diplomatie|": "diplomacy|",
+    "médecine|": "medecine|",
+    "occultisme|": "occultism|",
+    "représentation|": "performance|",
+    "société|": "society|",
+    "discrétion|": "stealth|",
+    "survie|": "survival|",
+    "vol|": "thievery|",
+    "larcin|": "thievery|"
 }
-LOCALIZE_PATTERN_SAVES_ROLLS = re.compile(r'\b(' + '|'.join(LOCALIZE_SAVES_ROLLS.keys()) + r')\b')
+LOCALIZE_PATTERN_SAVES_ROLLS = re.compile(r'\b(' + '|'.join(re.escape(k) for k in LOCALIZE_SAVES_ROLLS.keys()) + r')')
 
 LOCALIZE_CONDITIONS = {
     "Aveuglé?e?s?": "XgEqL1kFApUbl5Z2",
@@ -98,6 +100,7 @@ LOCALIZE_CONDITIONS = {
     "Sourde?s?": "9PR9y0bi4JPKnHPR",
     "Invisibles?": "zJxUflt9np0q4yML",
     "Prise?s? au dépourvu": "AJh5ex99aV6VTggg",
+    "Prise?s? par surprise": "AJh5ex99aV6VTggg",
     "Immobilisée?s?": "eIcWbB5o3pP6OIMe",
     "Á terre": "j91X7x0XSomq8d60",
     "Inconsciente?s?": "fBnFDH2MTzgFijKf",
@@ -120,12 +123,12 @@ LOCALIZE_CONDITIONS = {
 }
 
 LOCALIZE_TEMPLATES = {
-    "émanation": "emanation",
-    "explosion": "burst",
-    "cône": "cone",
-    "ligne": "line"
+    "émanation|": "emanation|",
+    "explosion|": "burst|",
+    "cône|": "cone|",
+    "ligne|": "line|"
 }
-LOCALIZE_PATTERN_TEMPLATES = re.compile(r'\b(' + "|".join(LOCALIZE_TEMPLATES.keys()) + r')\b')
+LOCALIZE_PATTERN_TEMPLATES = re.compile(r'\b(' + '|'.join(re.escape(k) for k in LOCALIZE_TEMPLATES.keys()) + r')')
 
 LOCALIZE_DAMAGE = {
     "contondant": "bludgeoning",
@@ -139,10 +142,10 @@ LOCALIZE_DAMAGE = {
     "électricité": "electricity",
     "feu": "fire",
     "son": "sonic",
-    "positif": "positive",
-    "positifs": "positive",
-    "négatif": "negative",
-    "négatifs": "negative",
+    "positif": "vitality",
+    "positifs": "vitality",
+    "négatif": "void",
+    "négatifs": "void",
     "chaotique": "chaotic",
     "chaotiques": "chaotic",
     "loyal": "lawful",
@@ -155,12 +158,18 @@ LOCALIZE_DAMAGE = {
     "poison": "poison",
     "saignement": "bleed",
     "précision": "precision",
-    "nécrotique": "necrotic",
-    "nécrotiques": "necrotic",
+    "nécrotique": "void",
+    "nécrotiques": "void",
     "vide": "void",
     "vitalité": "vitality"
 }
-LOCALIZE_PATTERN_DAMAGE = re.compile(r'\b(' + '|'.join(LOCALIZE_DAMAGE.keys()) + r')\b')
+
+LOCALIZE_DURATION = {
+    "secondes": "seconds",
+    "minutes": "minutes",
+    "heures": "hours",
+    "jours": "days"
+}
 
 
 def convert_to_lower(match_obj):
@@ -196,9 +205,6 @@ def handle_conditions(string):
     for condition in CONDITIONS:
         string = condition_sub(string, condition)
 
-    # Handle this one manually due to the lack of hyphen.
-    # string = sub(r"pris au dépourvu", r"%sAJh5ex99aV6VTggg]{Pris au dépourvu}" % CONDITION_COMPENDIUM, string, count=1)
-
     for condition in NUMBERED_CONDITIONS:
         for i in range(1, 6):
             string = condition_sub_with_stage(string, condition, i)
@@ -206,7 +212,7 @@ def handle_conditions(string):
 
 
 def handle_damage_rolls(string):
-    string = sub(r" (\d)d(\d) (rounds|minutes|heures|jours)", r" [[/r \1d\2 #\3]]{\1d\2 \3}", string)
+    string = sub(r" (\d)d(\d) (rounds|minutes|heures|jours)", r" [[/br \1d\2 #\3]]{\1d\2 \3}", string)
     string = sub(r"(\d+)(d\d+)?(\+\d+)? dégât(s)?( d\'éclaboussures?)?(\sde\s|\sd\'|\s)(\w*)( persistants?)?",
                  lambda x: f"@Damage["
                            f"{'(' if x.group(3) is not None else ''}"
@@ -233,7 +239,6 @@ def handle_damage_rolls(string):
                  , string)
     string = sub(r"\[\]", "", string)
     string = sub(r"(\d+)d(\d+) (\w+)(\,|\.)", r"[[/r \1d\2 #\3]]{\1d\2 \3}\4", string)
-    string = sub(r"(\d+)d(\d+)\.", r"[[/r \1d\2]]{\1d\2}.", string)
     return string
 
 
@@ -284,9 +289,7 @@ def handle_inlines_checks(string):
     string = sub(r"%s %s" % (SKILLS, DC), r"@Check[\1|dc:\2]", string)
     string = sub(r"%s \(%s\)" % (SKILLS, DC), r"@Check[\1|dc:\2", string)
 
-    string = sub(r"(\w+) Lore %s" % DC, r"@Check[\2|dc:\1]", string)
-    string = sub(r"%s (\w+) save" % DC, r"@Check[\2|dc:\1]", string)
-    string = sub(r"%s flat check" % DC, r"@Check[flat|dc:\1]", string)
+    string = sub(r"test nu %s" % DC, r"@Check[flat|dc:\1]", string)
 
     # Catch capitalized saves
     string = sub(r"%s\|" % SAVES, convert_to_lower, string)
@@ -311,21 +314,19 @@ def reformat(text, use_clipboard=True,
         .replace("Succès.", "</p>\n<p><strong>Succès</strong>") \
         .replace("Échec critique.", "</p>\n<p><strong>Échec critique</strong>") \
         .replace("Échec.", "</p>\n<p><strong>Échec</strong>") \
-        .replace("Spécial.", "</p>\n<p><strong>Spécial</strong>") \
+        .replace("Spécial.", "</p>\n<hr/><p><strong>Spécial</strong>") \
         .replace("Fréquence", "<p><strong>Fréquence</strong>") \
         .replace("Effet.", "</p>\n<hr />\n<p><strong>Effet</strong>") \
         .replace("Coût", "<strong>Coût</strong>")
     if not remove_enclosing_html:
         string += "</p>"
     string = string.replace("<p><p>", "<p>") \
-        .replace(r"”", r'"') \
-        .replace(r"“", r'"') \
         .replace("Durée maximale", "</p>\n<p><strong>Durée maximale</strong>") \
         .replace("Délai", "</p>\n<p><strong>Délai</strong>") \
         .replace("Jet de sauvegarde", "</p>\n<hr />\n<p><strong>Jet de sauvegarde</strong>")
 
     if remove_non_ASCII:
-        string = string.replace("’", "'")
+        string = string.replace("’", "'").replace(r"”", r'"').replace(r"“", r'"')
 
     string = sub(r"(Condition(s)?)", r"<p><strong>Conditions</strong>", string)
 
@@ -333,6 +334,21 @@ def reformat(text, use_clipboard=True,
 
     string = sub("Prérequis", "<p><strong>Prérequis</strong>", string, count=1)
     string = sub(r"Activation \?", r"</p><p><strong>Activation</strong> <span class='pf2-icon'>1</span>", string)
+    string = sub(r"Activation (\d+) (minute|minutes|heure|heures)", r"</p><p><strong>Activation</strong> \1 \2", string)
+    string = sub(r"Activation—(.*?) \?", r"</p><p><strong>Activation—\1</strong> <span class='pf2-icon'>1</span>", string)
+    string = sub(r"Activation—(.*?) (\d+) (minute|minutes|heure|heures)", r"</p><p><strong>Activation—\1</strong> \2 \3",
+                 string)
+
+    string = sub(r"ne peut plus utiliser (.*?) pendant (\d)d(\d) rounds",
+                 r"ne peut plus utiliser \1 pendant [[/gmr \2d\3 #Recharge]]{\2d\3 rounds}", string)
+    string = sub(r"ne peut plus (.*?) pendant (\d)d(\d) rounds",
+                 r"ne peut plus \1 pendant [[/gmr \2d\3 #Recharge]]{\2d\3 rounds}", string)
+    string = sub(r" (\d)d(\d) (rounds|minutes|heures|jours)",
+                 lambda x: f"[[/gmr {x.group(1)}d{x.group(2)} #"
+                           f"{LOCALIZE_DURATION[x.group(3)] if x.group(3) in LOCALIZE_DURATION else ''}]]"
+                           f"{{{x.group(1)}d{x.group(2)} {x.group(3)}}}"
+                 , string)
+    string = string.replace(r"ou Dissipation de la Magie (", r"ou @UUID[Compendium.pf2e.spells-srd.Item.9HpwDN4MYQJnW0LG] (")
 
     if add_inline_checks:
         string = handle_inlines_checks(string)
@@ -352,14 +368,14 @@ def reformat(text, use_clipboard=True,
     if add_actions:
         string = handle_actions(string)
 
-    string = handle_aura(string)
+    # string = handle_aura(string)
     string = handle_areas(string)
 
-    string = string.replace("<p></p>", "").replace("<p><p>", "<p>")
     string = string.replace(" <p>", "</p><p>")
     string = string.replace(" </p>", "</p>")
     string = string.replace(";</p>", "</p>")
     string = string.replace("<p> ", "<p>")
+    string = string.replace("<p></p>", "").replace("<p><p>", "<p>")
 
     # Sneak attack features have different text requirements so we undo some of the changes made
     string = sub(
@@ -398,7 +414,7 @@ Width = 800
 
 root = Tk()
 
-root.title("Foundry VTT Data Entry French v 1.2.0")
+root.title("Foundry VTT Data Entry French v 1.3.0")
 
 canvas = Canvas(root, height=Height, width=Width)
 canvas.pack()
